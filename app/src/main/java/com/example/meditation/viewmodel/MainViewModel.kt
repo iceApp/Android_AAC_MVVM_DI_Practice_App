@@ -1,8 +1,9 @@
-package com.example.meditation
+package com.example.meditation.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import java.util.concurrent.TimeUnit
+import com.example.meditation.model.UserSettings
+import com.example.meditation.model.UserSettingsRepository
 
 class MainViewModel: ViewModel() {
 
@@ -18,7 +19,8 @@ class MainViewModel: ViewModel() {
     
     val playStatus = MutableLiveData<Int>()
 
-    private val userSettingRepository = UserSettingsRepository()
+    private val userSettingRepository =
+        UserSettingsRepository()
     private lateinit var userSettings: UserSettings
     fun initParameters() {
         userSettings = userSettingRepository.loadUserSettings()
@@ -38,5 +40,9 @@ class MainViewModel: ViewModel() {
         val ss = timeSeconds % 60; // 秒
         return String.format("%1$02d:%2$02d", mm, ss)
 //        return  TimeUnit.MINUTES.convert(timeSeconds.toLong(),TimeUnit.MILLISECONDS).toString()
+    }
+
+    fun setLevel(selectedItemId: Int) {
+        txtLevel.value = userSettingRepository.setLevel(selectedItemId)
     }
 }

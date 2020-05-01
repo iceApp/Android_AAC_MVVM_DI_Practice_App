@@ -39,7 +39,7 @@
     <string name="notification_title">Meditation App is Running</string>
     <string name="notification_text">Tap to return to the app</string>
 
-    <!--Dialog : com.example.meditation.ThemeData Select -->
+    <!--Dialog : com.example.meditation.data.ThemeData Select -->
     <string name="select_theme">Choose a Theme</string>
 
     <!--Dialog : Level Select -->

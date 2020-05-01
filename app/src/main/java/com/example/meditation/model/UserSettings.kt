@@ -1,4 +1,4 @@
-package com.example.meditation
+package com.example.meditation.model
 
 import java.util.*
 
@@ -12,7 +12,7 @@ data class UserSettings (
     var time: Int
 ) {
     companion object {
-        const val PREF_USERSETTINGS_NAME = "net.minpro.meiso.user_settings"
+        const val PREF_USERSETTINGS_NAME = "com.example.meditation.user_settings"
     }
 }
 

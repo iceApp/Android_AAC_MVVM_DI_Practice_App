@@ -38,7 +38,7 @@
     <string name="notification_title">瞑想アプリ起動中</string>
     <string name="notification_text">タップしてアプリに戻る</string>
 
-    <!--Dialog : com.example.meditation.ThemeData Select -->
+    <!--Dialog : com.example.meditation.data.ThemeData Select -->
     <string name="select_theme">テーマを選んでください</string>
 
     <!--Dialog : Level Select -->
