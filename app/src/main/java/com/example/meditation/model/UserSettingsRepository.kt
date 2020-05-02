@@ -62,4 +62,21 @@ class UserSettingsRepository {
         editor.putInt(UserSettingsPrefkey.LEVEL_NAME_STR_ID.name, levelNameStrId).commit()
         return loadUserSettings().levelName
     }
+
+    fun setTime(selectedItemId: Int): Int{
+        val selectedTime: Int = when(selectedItemId){
+            0 -> 5
+            1 -> 10
+            2 -> 15
+            3 -> 20
+            4 -> 25
+            5 -> 30
+            6 -> 35
+            else -> 30
+
+        }
+        editor.putInt(UserSettingsPrefkey.TIME.name, selectedTime).commit()
+        return loadUserSettings().time
+
+    }
 }

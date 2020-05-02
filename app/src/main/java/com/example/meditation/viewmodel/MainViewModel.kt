@@ -14,7 +14,7 @@ class MainViewModel: ViewModel() {
     var txtTheme = MutableLiveData<String>()
     var txtLevel = MutableLiveData<String>()
 
-    val remainedTimeSeconds = MutableLiveData<Int>()
+    var remainedTimeSeconds = MutableLiveData<Int>()
     var displayTimeSeconds = MutableLiveData<String>()
     
     val playStatus = MutableLiveData<Int>()
@@ -44,5 +44,11 @@ class MainViewModel: ViewModel() {
 
     fun setLevel(selectedItemId: Int) {
         txtLevel.value = userSettingRepository.setLevel(selectedItemId)
+    }
+
+    fun setTime(selectedItemId: Int) {
+        remainedTimeSeconds.value = userSettingRepository.setTime(selectedItemId) * 60
+        displayTimeSeconds.value = changeTimerFormat(remainedTimeSeconds.value!!)
+
     }
 }

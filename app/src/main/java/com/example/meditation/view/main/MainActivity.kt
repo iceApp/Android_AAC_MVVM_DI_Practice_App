@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.meditation.R
 import com.example.meditation.view.dialog.LevelSelectDialog
+import com.example.meditation.view.dialog.TimeSelectDialog
 import kotlinx.android.synthetic.main.activity_main.*
 import net.minpro.meditation.FragmentTag
 
@@ -34,6 +35,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 R.id.item_select_time -> {
+                    TimeSelectDialog().show(supportFragmentManager,FragmentTag.TIME_SELECT.name)
                     true
                 }
                 else -> {false}
