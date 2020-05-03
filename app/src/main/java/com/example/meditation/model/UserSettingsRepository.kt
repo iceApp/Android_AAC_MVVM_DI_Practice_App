@@ -43,6 +43,11 @@ class UserSettingsRepository {
                 UserSettingsPrefkey.THEME_SOUND_ID.name,
                 0
             ),
+
+            timeSelectId = pref.getInt(
+                UserSettingsPrefkey.TIME_SELECT_ID.name,
+                4
+            ),
             time = pref.getInt(
                 UserSettingsPrefkey.TIME.name,
                 30
@@ -63,7 +68,12 @@ class UserSettingsRepository {
         return loadUserSettings().levelName
     }
 
+    fun getTimeId(): Int{
+        return loadUserSettings().timeSelectId
+    }
+
     fun setTime(selectedItemId: Int): Int{
+        editor.putInt(UserSettingsPrefkey.TIME_SELECT_ID.name, selectedItemId).commit()
         val selectedTime: Int = when(selectedItemId){
             0 -> 5
             1 -> 10
@@ -73,10 +83,8 @@ class UserSettingsRepository {
             5 -> 45
             6 -> 60
             else -> 30
-
         }
         editor.putInt(UserSettingsPrefkey.TIME.name, selectedTime).commit()
         return loadUserSettings().time
-
     }
 }

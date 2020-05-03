@@ -9,6 +9,7 @@ data class UserSettings (
     var themeName: String,
     var themeResId: Int,
     var themeSoundId: Int,
+    var timeSelectId: Int,
     var time: Int
 ) {
     companion object {
@@ -23,5 +24,6 @@ enum class UserSettingsPrefkey{
     THEME_NAME_STR_ID,
     THEME_RES_ID,
     THEME_SOUND_ID,
+    TIME_SELECT_ID,
     TIME
 }
