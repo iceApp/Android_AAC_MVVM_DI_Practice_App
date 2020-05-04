@@ -11,10 +11,9 @@ import com.example.meditation.viewmodel.MainViewModel
 
 class TimeSelectDialog: DialogFragment() {
 
-    private val viewModel: MainViewModel by activityViewModels()
     private var selectedItemId: Int = 0
 
-
+    private val viewModel: MainViewModel by activityViewModels()
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return AlertDialog.Builder(requireActivity()).apply {

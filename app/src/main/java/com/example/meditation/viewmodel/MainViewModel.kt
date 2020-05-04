@@ -44,6 +44,10 @@ class MainViewModel: ViewModel() {
 //        return  TimeUnit.MINUTES.convert(timeSeconds.toLong(),TimeUnit.MILLISECONDS).toString()
     }
 
+    fun getLevelId(): Int {
+        return userSettingRepository.getLevelId()
+    }
+
     fun getTimeId(): Int{
         return userSettingRepository.getTimeId()
     }

@@ -87,4 +87,8 @@ class UserSettingsRepository {
         editor.putInt(UserSettingsPrefkey.TIME.name, selectedTime).commit()
         return loadUserSettings().time
     }
+
+    fun getLevelId(): Int {
+        return loadUserSettings().levelId
+    }
 }

@@ -17,6 +17,7 @@ class LevelSelectDialog: DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return AlertDialog.Builder(requireActivity()).apply {
             setTitle(R.string.select_level)
+            selectedItemId = viewModel.getLevelId()
             setSingleChoiceItems(R.array.level_list, selectedItemId ){ dialog, which ->
                 selectedItemId = which
                 viewModel.setLevel(selectedItemId)
