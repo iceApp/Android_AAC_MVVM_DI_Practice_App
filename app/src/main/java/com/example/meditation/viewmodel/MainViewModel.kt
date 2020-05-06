@@ -14,7 +14,7 @@ class MainViewModel: ViewModel() {
     var txtTheme = MutableLiveData<String>()
     var txtLevel = MutableLiveData<String>()
 
-    var timeSelectId = MutableLiveData<Int>()
+    var timeId = MutableLiveData<Int>()
     var remainedTimeSeconds = MutableLiveData<Int>()
     var displayTimeSeconds = MutableLiveData<String>()
     
@@ -30,7 +30,7 @@ class MainViewModel: ViewModel() {
         themePicFileResId.value = userSettings.themeResId
         txtTheme.value = userSettings.themeName
         txtLevel.value = userSettings.levelName
-        timeSelectId.value = userSettings.timeSelectId
+        timeId.value = userSettings.timeId
         remainedTimeSeconds.value = userSettings.time * 60
         displayTimeSeconds.value = changeTimerFormat(remainedTimeSeconds.value!!)
         playStatus.value = 0
@@ -45,11 +45,11 @@ class MainViewModel: ViewModel() {
     }
 
     fun getLevelId(): Int {
-        return userSettingRepository.getLevelId()
+        return userSettingRepository.loadUserSettings().levelId
     }
 
     fun getTimeId(): Int{
-        return userSettingRepository.getTimeId()
+        return userSettingRepository.loadUserSettings().timeId
     }
 
     fun setLevel(selectedItemId: Int) {

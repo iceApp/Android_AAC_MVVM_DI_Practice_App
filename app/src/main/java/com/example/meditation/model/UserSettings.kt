@@ -9,7 +9,7 @@ data class UserSettings (
     var themeName: String,
     var themeResId: Int,
     var themeSoundId: Int,
-    var timeSelectId: Int,
+    var timeId: Int,
     var time: Int
 ) {
     companion object {

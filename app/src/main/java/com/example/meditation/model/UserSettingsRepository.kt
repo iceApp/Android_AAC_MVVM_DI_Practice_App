@@ -44,7 +44,7 @@ class UserSettingsRepository {
                 0
             ),
 
-            timeSelectId = pref.getInt(
+            timeId = pref.getInt(
                 UserSettingsPrefkey.TIME_SELECT_ID.name,
                 4
             ),
@@ -68,10 +68,6 @@ class UserSettingsRepository {
         return loadUserSettings().levelName
     }
 
-    fun getTimeId(): Int{
-        return loadUserSettings().timeSelectId
-    }
-
     fun setTime(selectedItemId: Int): Int{
         editor.putInt(UserSettingsPrefkey.TIME_SELECT_ID.name, selectedItemId).commit()
         val selectedTime: Int = when(selectedItemId){
@@ -88,7 +84,4 @@ class UserSettingsRepository {
         return loadUserSettings().time
     }
 
-    fun getLevelId(): Int {
-        return loadUserSettings().levelId
-    }
 }
