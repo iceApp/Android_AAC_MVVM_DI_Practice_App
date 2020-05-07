@@ -47,6 +47,7 @@ class MainViewModel: ViewModel() {
     }
 
     fun setLevel(selectedItemId: Int) {
+        levelId.value = userSettingRepository.loadUserSettings().levelId
         txtLevel.value = userSettingRepository.setLevel(selectedItemId)
     }
 
