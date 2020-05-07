@@ -2,6 +2,7 @@ package com.example.meditation.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.meditation.data.ThemeData
 import com.example.meditation.model.UserSettings
 import com.example.meditation.model.UserSettingsRepository
 
@@ -55,6 +56,13 @@ class MainViewModel: ViewModel() {
         timeId.value = selectedItemId
         remainedTimeSeconds.value = userSettingRepository.setTime(selectedItemId) * 60
         displayTimeSeconds.value = changeTimerFormat(remainedTimeSeconds.value!!)
+
+    }
+
+    fun setTheme(themeData: ThemeData) {
+        userSettingRepository.setTheme(themeData)
+        txtTheme.value = userSettingRepository.loadUserSettings().themeName
+        themePicFileResId.value = userSettingRepository.loadUserSettings().themeResId
 
     }
 }

@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.meditation.R
 import com.example.meditation.view.dialog.LevelSelectDialog
+import com.example.meditation.view.dialog.ThemeSelectDialog
 import com.example.meditation.view.dialog.TimeSelectDialog
 import kotlinx.android.synthetic.main.activity_main.*
 import net.minpro.meditation.FragmentTag
@@ -31,6 +32,7 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.item_select_theme -> {
+                    ThemeSelectDialog().show(supportFragmentManager,FragmentTag.THEME_SELECT.name)
                     true
                 }
 

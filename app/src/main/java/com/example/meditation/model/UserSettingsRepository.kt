@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import com.example.meditation.MyApplication
 import com.example.meditation.R
 import com.example.meditation.data.ThemeData
+import net.minpro.meditation.LevelId
 
 class UserSettingsRepository {
     private val context: Context =
@@ -80,6 +81,13 @@ class UserSettingsRepository {
         }
         editor.putInt(UserSettingsPrefkey.TIME.name, selectedTime).commit()
         return loadUserSettings().time
+    }
+
+    fun setTheme(themeData: ThemeData) {
+        editor.putInt(UserSettingsPrefkey.THEME_ID.name, themeData.themeId).commit()
+        editor.putInt(UserSettingsPrefkey.THEME_NAME_STR_ID.name, themeData.themeNameResId).commit()
+        editor.putInt(UserSettingsPrefkey.THEME_RES_ID.name, themeData.themeLandPicResId).commit()
+        editor.putInt(UserSettingsPrefkey.THEME_SOUND_ID.name, themeData.themeSoundId).commit()
     }
 
 }
