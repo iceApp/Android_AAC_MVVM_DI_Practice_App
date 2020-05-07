@@ -16,10 +16,14 @@ class TimeSelectDialog: DialogFragment() {
     private val viewModel: MainViewModel by activityViewModels()
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        return AlertDialog.Builder(requireActivity()).apply {
+
+        viewModel.timeId.observe(requireActivity(), Observer {
+            selectedItemId = it
+        })
+
+        val dialog = AlertDialog.Builder(requireActivity()).apply {
 
             setTitle(R.string.select_time)
-            selectedItemId = viewModel.getTimeId()
             setSingleChoiceItems(R.array.time_list,selectedItemId){dialog, which ->
 
                 selectedItemId = which
@@ -27,5 +31,7 @@ class TimeSelectDialog: DialogFragment() {
                 dismiss()
             }
         }.create()
+        
+        return dialog
     }
 }

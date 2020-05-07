@@ -2,10 +2,9 @@ package com.example.meditation.model
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.util.Log
 import com.example.meditation.MyApplication
 import com.example.meditation.R
-import net.minpro.meditation.LevelId
+import com.example.meditation.data.ThemeData
 
 class UserSettingsRepository {
     private val context: Context =
@@ -43,9 +42,8 @@ class UserSettingsRepository {
                 UserSettingsPrefkey.THEME_SOUND_ID.name,
                 0
             ),
-
             timeId = pref.getInt(
-                UserSettingsPrefkey.TIME_SELECT_ID.name,
+                UserSettingsPrefkey.TIME_ID.name,
                 4
             ),
             time = pref.getInt(
@@ -69,7 +67,7 @@ class UserSettingsRepository {
     }
 
     fun setTime(selectedItemId: Int): Int{
-        editor.putInt(UserSettingsPrefkey.TIME_SELECT_ID.name, selectedItemId).commit()
+        editor.putInt(UserSettingsPrefkey.TIME_ID.name,selectedItemId).commit()
         val selectedTime: Int = when(selectedItemId){
             0 -> 5
             1 -> 10

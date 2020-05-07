@@ -24,6 +24,6 @@ enum class UserSettingsPrefkey{
     THEME_NAME_STR_ID,
     THEME_RES_ID,
     THEME_SOUND_ID,
-    TIME_SELECT_ID,
+    TIME_ID,
     TIME
 }
