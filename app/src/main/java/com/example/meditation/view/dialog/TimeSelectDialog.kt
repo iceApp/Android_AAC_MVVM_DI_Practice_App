@@ -21,17 +21,15 @@ class TimeSelectDialog: DialogFragment() {
             selectedItemId = it
         })
 
-        val dialog = AlertDialog.Builder(requireActivity()).apply {
+        return AlertDialog.Builder(requireActivity()).apply {
 
             setTitle(R.string.select_time)
-            setSingleChoiceItems(R.array.time_list,selectedItemId){dialog, which ->
+            setSingleChoiceItems(R.array.time_list, selectedItemId){ _, which ->
 
                 selectedItemId = which
                 viewModel.setTime(selectedItemId)
                 dismiss()
             }
         }.create()
-        
-        return dialog
     }
 }
