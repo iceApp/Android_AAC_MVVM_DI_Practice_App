@@ -11,7 +11,7 @@ import com.example.meditation.viewmodel.MainViewModel
 
 class LevelSelectDialog: DialogFragment() {
 
-    private var selectedItemId = 0
+    private var selectedItemId: Int = 0
 
     private val viewModel: MainViewModel by activityViewModels()
 
@@ -21,15 +21,13 @@ class LevelSelectDialog: DialogFragment() {
             selectedItemId = it
         })
 
-        val dialog = AlertDialog.Builder(requireActivity()).apply {
+        return AlertDialog.Builder(requireActivity()).apply {
             setTitle(R.string.select_level)
-            setSingleChoiceItems(R.array.level_list, selectedItemId ){ dialog, which ->
+            setSingleChoiceItems(R.array.level_list, selectedItemId){ _, which ->
                 selectedItemId = which
                 viewModel.setLevel(selectedItemId)
-                dialog.dismiss()
+                dismiss()
             }
         }.create()
-
-        return dialog
     }
 }
