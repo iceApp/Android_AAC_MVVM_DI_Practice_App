@@ -29,16 +29,16 @@ class MainActivity : AppCompatActivity() {
         btmNavi.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.item_select_level -> {
-                    LevelSelectDialog().show(supportFragmentManager,FragmentTag.LEVEL_SELECT.name)
+                    LevelSelectDialog().show(supportFragmentManager, FragmentTag.LEVEL_SELECT.name)
                     true
                 }
                 R.id.item_select_theme -> {
-                    ThemeSelectDialog().show(supportFragmentManager,FragmentTag.THEME_SELECT.name)
+                    ThemeSelectDialog().show(supportFragmentManager, FragmentTag.THEME_SELECT.name)
                     true
                 }
 
                 R.id.item_select_time -> {
-                    TimeSelectDialog().show(supportFragmentManager,FragmentTag.TIME_SELECT.name)
+                    TimeSelectDialog().show(supportFragmentManager, FragmentTag.TIME_SELECT.name)
                     true
                 }
                 else -> {false}
