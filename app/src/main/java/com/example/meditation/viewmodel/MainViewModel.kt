@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.example.meditation.data.ThemeData
 import com.example.meditation.model.UserSettings
 import com.example.meditation.model.UserSettingsRepository
+import com.example.meditation.util.PlayStatus
 
 class MainViewModel: ViewModel() {
 
@@ -56,13 +57,19 @@ class MainViewModel: ViewModel() {
         timeId.value = selectedItemId
         remainedTimeSeconds.value = userSettingRepository.setTime(selectedItemId) * 60
         displayTimeSeconds.value = changeTimerFormat(remainedTimeSeconds.value!!)
-
     }
 
     fun setTheme(themeData: ThemeData) {
         userSettingRepository.setTheme(themeData)
         txtTheme.value = userSettingRepository.loadUserSettings().themeName
         themePicFileResId.value = userSettingRepository.loadUserSettings().themeResId
+    }
 
+    fun changeStatus() {
+        when (playStatus.value) {
+            PlayStatus.BEFORE_START -> playStatus.value = PlayStatus.ON_START
+            PlayStatus.ON_START -> playStatus.value = PlayStatus.PAUSE
+            PlayStatus.PAUSE -> playStatus.value = PlayStatus.RUNNING
+        }
     }
 }
