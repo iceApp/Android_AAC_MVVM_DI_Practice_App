@@ -5,7 +5,7 @@ import android.content.SharedPreferences
 import com.example.meditation.MyApplication
 import com.example.meditation.R
 import com.example.meditation.data.ThemeData
-import net.minpro.meditation.LevelId
+import com.example.meditation.util.LevelId
 
 class UserSettingsRepository {
     private val context: Context =

@@ -3,8 +3,8 @@ package com.example.meditation
 import android.app.Application
 import android.content.Context
 import com.example.meditation.data.ThemeData
-import net.minpro.meditation.NO_BGM
-import net.minpro.meditation.ThemeId
+import com.example.meditation.util.NO_BGM
+import com.example.meditation.util.ThemeId
 import java.util.ArrayList
 
 class MyApplication: Application() {

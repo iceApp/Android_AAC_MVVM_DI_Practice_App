@@ -17,7 +17,6 @@ import com.bumptech.glide.request.transition.Transition
 import com.example.meditation.viewmodel.MainViewModel
 import com.example.meditation.R
 import com.example.meditation.databinding.FragmentMainBinding
-import net.minpro.meditation.PlayStatus
 
 /**
  * A simple [Fragment] subclass.

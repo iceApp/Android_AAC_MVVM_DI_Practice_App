@@ -7,7 +7,8 @@ import com.example.meditation.view.dialog.LevelSelectDialog
 import com.example.meditation.view.dialog.ThemeSelectDialog
 import com.example.meditation.view.dialog.TimeSelectDialog
 import kotlinx.android.synthetic.main.activity_main.*
-import net.minpro.meditation.FragmentTag
+import com.example.meditation.util.FragmentTag
+import com.example.meditation.util.PlayStatus
 
 class MainActivity : AppCompatActivity() {
 

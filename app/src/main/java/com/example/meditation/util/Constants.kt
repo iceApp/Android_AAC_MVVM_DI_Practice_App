@@ -1,4 +1,4 @@
-package net.minpro.meditation
+package com.example.meditation.util
 
 import android.media.midi.MidiDevice
 
