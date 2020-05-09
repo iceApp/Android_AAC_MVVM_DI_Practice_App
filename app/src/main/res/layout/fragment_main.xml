@@ -126,6 +126,7 @@
             android:layout_marginEnd="100dp"
             android:layout_marginBottom="16dp"
             app:layout_constraintBottom_toTopOf="@+id/volumeSeekBar"
+            app:layout_constraintDimensionRatio="1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtMsgLowerLarge" />
