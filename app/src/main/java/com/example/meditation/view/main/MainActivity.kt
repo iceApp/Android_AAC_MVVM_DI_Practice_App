@@ -1,16 +1,22 @@
 package com.example.meditation.view.main
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.activity.viewModels
+import androidx.lifecycle.Observer
 import com.example.meditation.R
 import com.example.meditation.view.dialog.LevelSelectDialog
 import com.example.meditation.view.dialog.ThemeSelectDialog
 import com.example.meditation.view.dialog.TimeSelectDialog
+import com.example.meditation.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import com.example.meditation.util.FragmentTag
 import com.example.meditation.util.PlayStatus
 
 class MainActivity : AppCompatActivity() {
+
+    private val viewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
@@ -25,6 +31,8 @@ class MainActivity : AppCompatActivity() {
                 )
                 .commit()
         }
+
+        observeViewModel()
 
         btmNavi.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
@@ -44,5 +52,14 @@ class MainActivity : AppCompatActivity() {
                 else -> {false}
             }
         }
+    }
+
+    private fun observeViewModel() {
+        viewModel.playStatus.observe(this, Observer { status ->
+            when(status){
+                PlayStatus.ON_START -> btmNavi.visibility = View.INVISIBLE
+                else -> btmNavi.visibility = View.VISIBLE
+            }
+        })
     }
 }
