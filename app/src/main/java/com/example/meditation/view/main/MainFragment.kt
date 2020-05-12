@@ -57,6 +57,19 @@ class MainFragment : Fragment() {
             updateUi(status)
 
             //TODO: タイマー動作
+            when (status){
+                PlayStatus.BEFORE_START -> {
+
+                }
+                PlayStatus.ON_START -> {
+                    viewModel.countDownBeforeStart()
+                }
+                PlayStatus.RUNNING -> {
+                }
+
+                PlayStatus.PAUSE -> {
+                }
+            }
         })
 
         viewModel.themePicFileResId.observe(viewLifecycleOwner, Observer { themePicResId ->
@@ -68,8 +81,11 @@ class MainFragment : Fragment() {
     private fun updateUi(status: Int?) {
         when (status){
             PlayStatus.BEFORE_START -> {
-                btnPlay.visibility = View.VISIBLE
-                btnPlay.setBackgroundResource(R.drawable.button_play)
+                btnPlay.apply {
+                    visibility = View.VISIBLE
+                    setBackgroundResource(R.drawable.button_play)
+                }
+
                 btnFinish.visibility = View.INVISIBLE
                 txtShowMenu.visibility = View.INVISIBLE
 

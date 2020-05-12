@@ -56,9 +56,19 @@ class MainActivity : AppCompatActivity() {
 
     private fun observeViewModel() {
         viewModel.playStatus.observe(this, Observer { status ->
-            when(status){
-                PlayStatus.ON_START -> btmNavi.visibility = View.INVISIBLE
-                else -> btmNavi.visibility = View.VISIBLE
+            when (status){
+                PlayStatus.BEFORE_START -> {
+                    btmNavi.visibility = View.VISIBLE
+                }
+                PlayStatus.ON_START -> {
+                    btmNavi.visibility = View.INVISIBLE
+                }
+                PlayStatus.RUNNING -> {
+                    btmNavi.visibility = View.INVISIBLE
+                }
+
+                PlayStatus.PAUSE -> {
+                }
             }
         })
     }

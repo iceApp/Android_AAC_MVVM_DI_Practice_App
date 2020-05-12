@@ -1,14 +1,22 @@
 package com.example.meditation.viewmodel
 
+import android.app.Application
+import android.content.Context
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.meditation.MyApplication
+import com.example.meditation.R
 import com.example.meditation.data.ThemeData
 import com.example.meditation.model.UserSettings
 import com.example.meditation.model.UserSettingsRepository
 import com.example.meditation.util.PlayStatus
+import kotlinx.android.synthetic.main.fragment_main.view.*
+import java.sql.Time
+import java.util.*
+import kotlin.concurrent.schedule
 
-class MainViewModel: ViewModel() {
-
+class MainViewModel(private val context: Application): AndroidViewModel(context) {
 
     val msgUpperSmall = MutableLiveData<String>()
     val msgLowerLarge = MutableLiveData<String>()
@@ -70,6 +78,25 @@ class MainViewModel: ViewModel() {
             PlayStatus.BEFORE_START -> playStatus.value = PlayStatus.ON_START
             PlayStatus.ON_START -> playStatus.value = PlayStatus.PAUSE
             PlayStatus.PAUSE -> playStatus.value = PlayStatus.RUNNING
+        }
+    }
+
+    fun countDownBeforeStart() {
+        msgUpperSmall.value = context.getString(R.string.starts_in)
+        var timeRemained = 3
+        msgLowerLarge.value = timeRemained.toString()
+        val timer = Timer()
+        timer.schedule(1000,1000) {
+            if(timeRemained > 1){
+                timeRemained -= 1
+                msgLowerLarge.postValue(timeRemained.toString())
+
+            } else {
+                playStatus.postValue(PlayStatus.RUNNING)
+                timeRemained = 0
+                timer.cancel()
+            }
+
         }
     }
 }
