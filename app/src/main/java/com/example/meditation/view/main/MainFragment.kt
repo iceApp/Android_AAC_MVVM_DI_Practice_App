@@ -65,6 +65,7 @@ class MainFragment : Fragment() {
                     viewModel.countDownBeforeStart()
                 }
                 PlayStatus.RUNNING -> {
+                    viewModel.startMeditation()
                 }
 
                 PlayStatus.PAUSE -> {
@@ -96,10 +97,13 @@ class MainFragment : Fragment() {
                 txtShowMenu.visibility = View.VISIBLE
             }
             PlayStatus.RUNNING -> {
-                btnPlay.visibility = View.VISIBLE
-                txtShowMenu.visibility = View.INVISIBLE
-                btnFinish.visibility = View.VISIBLE
-                btnPlay.setBackgroundResource(R.drawable.button_pause)
+                btnPlay.apply {
+                    visibility = View.VISIBLE
+                    setBackgroundResource(R.drawable.button_pause)
+                }
+                btnFinish.visibility = View.INVISIBLE
+                txtShowMenu.visibility = View.VISIBLE
+
             }
 
             PlayStatus.PAUSE -> {

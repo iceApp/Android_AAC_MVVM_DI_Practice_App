@@ -34,6 +34,13 @@ class MainViewModel(private val context: Application): AndroidViewModel(context)
     private val userSettingRepository =
         UserSettingsRepository()
     private lateinit var userSettings: UserSettings
+
+    // 呼吸感覚
+    private val inhaleInterval = 4
+    private var holdInterval = 0
+    private var exhaleInterval = 0
+    private var totalInterval = 0
+
     fun initParameters() {
         userSettings = userSettingRepository.loadUserSettings()
         msgUpperSmall.value = ""
@@ -97,6 +104,49 @@ class MainViewModel(private val context: Application): AndroidViewModel(context)
                 timer.cancel()
             }
 
+        }
+    }
+
+    fun startMeditation() {
+        holdInterval = setholdInterval()
+        exhaleInterval = setExhaleInterval()
+        totalInterval = inhaleInterval + holdInterval + exhaleInterval
+
+        remainedTimeSeconds.value = adjustRemainedTIme(remainedTimeSeconds.value, totalInterval
+        )
+        displayTimeSeconds.value = changeTimerFormat(remainedTimeSeconds.value!!)
+        msgUpperSmall.value = context.getString(R.string.inhale)
+        msgLowerLarge.value = inhaleInterval.toString()
+
+        clockMeditation()
+
+    }
+    private fun adjustRemainedTIme(remainedTime: Int?, totalInterval: Int): Int? {
+        val remainder = remainedTime!! % totalInterval
+        return if (remainder > (totalInterval / 2 )){
+            remainedTime + (totalInterval - remainder)
+        } else {
+            remainedTime - remainder
+        }
+    }
+
+    private fun setExhaleInterval(): Int {
+        return when (userSettingRepository.loadUserSettings().levelId){
+            0 -> 4
+            1 -> 8
+            2 -> 8
+            3 -> 8
+            else -> 0
+        }
+    }
+
+    private fun setholdInterval(): Int {
+        return when (userSettingRepository.loadUserSettings().levelId){
+            0 -> 4
+            1 -> 4
+            2 -> 8
+            3 -> 16
+            else -> 0
         }
     }
 }
