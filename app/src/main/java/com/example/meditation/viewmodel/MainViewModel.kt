@@ -41,6 +41,8 @@ class MainViewModel(private val context: Application): AndroidViewModel(context)
     private var exhaleInterval = 0
     private var totalInterval = 0
 
+    private var timerMediation: Timer? = null
+
     fun initParameters() {
         userSettings = userSettingRepository.loadUserSettings()
         msgUpperSmall.value = ""
@@ -83,7 +85,8 @@ class MainViewModel(private val context: Application): AndroidViewModel(context)
     fun changeStatus() {
         when (playStatus.value) {
             PlayStatus.BEFORE_START -> playStatus.value = PlayStatus.ON_START
-            PlayStatus.ON_START -> playStatus.value = PlayStatus.PAUSE
+            PlayStatus.ON_START -> playStatus.value = PlayStatus.RUNNING
+            PlayStatus.RUNNING -> playStatus.value = PlayStatus.PAUSE
             PlayStatus.PAUSE -> playStatus.value = PlayStatus.RUNNING
         }
     }
@@ -119,8 +122,30 @@ class MainViewModel(private val context: Application): AndroidViewModel(context)
         msgLowerLarge.value = inhaleInterval.toString()
 
         clockMeditation()
-
     }
+
+    private fun clockMeditation() {
+        timerMediation = Timer()
+        timerMediation?.schedule(1000, 1000){
+            val tempTime = remainedTimeSeconds.value!! - 1
+            remainedTimeSeconds.postValue(tempTime)
+            displayTimeSeconds.postValue(changeTimerFormat(tempTime))
+
+            if(remainedTimeSeconds.value!! <= 1){
+                msgUpperSmall.value = ""
+                msgLowerLarge.postValue(context.resources.getString(R.string.meiso_finish))
+                playStatus.postValue(PlayStatus.END)
+                cancelTimer()
+                return@schedule
+            }
+            //TODO:経過時間に応じて文言を切り変える
+        }
+    }
+
+    private fun cancelTimer() {
+        timerMediation?.cancel()
+    }
+
     private fun adjustRemainedTIme(remainedTime: Int?, totalInterval: Int): Int? {
         val remainder = remainedTime!! % totalInterval
         return if (remainder > (totalInterval / 2 )){
