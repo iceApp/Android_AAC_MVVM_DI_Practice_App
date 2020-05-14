@@ -1,18 +1,13 @@
 package com.example.meditation.viewmodel
 
 import android.app.Application
-import android.content.Context
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.example.meditation.MyApplication
 import com.example.meditation.R
 import com.example.meditation.data.ThemeData
 import com.example.meditation.model.UserSettings
 import com.example.meditation.model.UserSettingsRepository
 import com.example.meditation.util.PlayStatus
-import kotlinx.android.synthetic.main.fragment_main.view.*
-import java.sql.Time
 import java.util.*
 import kotlin.concurrent.schedule
 
@@ -41,6 +36,10 @@ class MainViewModel(private val context: Application): AndroidViewModel(context)
     private var exhaleInterval = 0
     private var totalInterval = 0
 
+    var arrayInterval: ArrayList<Int> = arrayListOf()
+    var arrayIntervalIndex: Int = 0
+    var totalIntervalSecond: Int = 0
+    var remaindIntervalSecond: Int = 0
     private var timerMediation: Timer? = null
 
     fun initParameters() {
@@ -106,7 +105,6 @@ class MainViewModel(private val context: Application): AndroidViewModel(context)
                 timeRemained = 0
                 timer.cancel()
             }
-
         }
     }
 
@@ -114,6 +112,9 @@ class MainViewModel(private val context: Application): AndroidViewModel(context)
         holdInterval = setholdInterval()
         exhaleInterval = setExhaleInterval()
         totalInterval = inhaleInterval + holdInterval + exhaleInterval
+        arrayInterval = arrayListOf(inhaleInterval, holdInterval, exhaleInterval)
+        arrayIntervalIndex = 0
+        totalIntervalSecond = arrayInterval[arrayIntervalIndex]
 
         remainedTimeSeconds.value = adjustRemainedTIme(remainedTimeSeconds.value, totalInterval
         )
@@ -131,14 +132,34 @@ class MainViewModel(private val context: Application): AndroidViewModel(context)
             remainedTimeSeconds.postValue(tempTime)
             displayTimeSeconds.postValue(changeTimerFormat(tempTime))
 
-            if(remainedTimeSeconds.value!! <= 1){
-                msgUpperSmall.value = ""
+            if(remainedTimeSeconds.value!! <= 0){
+                msgUpperSmall.postValue("")
                 msgLowerLarge.postValue(context.resources.getString(R.string.meiso_finish))
                 playStatus.postValue(PlayStatus.END)
                 cancelTimer()
                 return@schedule
             }
-            //TODO:経過時間に応じて文言を切り変える
+            // 経過時間に応じて呼吸パターンの文言を切り変える
+            setMediationCycle()
+        }
+    }
+
+    private fun setMediationCycle() {
+        if (remaindIntervalSecond < totalIntervalSecond) {
+            var num = totalIntervalSecond - remaindIntervalSecond
+            msgLowerLarge.postValue(num.toString())
+        } else {
+            if (arrayIntervalIndex++ < 2) arrayIntervalIndex else arrayIntervalIndex = 0
+            totalIntervalSecond = arrayInterval[arrayIntervalIndex]
+            remaindIntervalSecond = 0
+            msgLowerLarge.postValue(totalIntervalSecond.toString())
+        }
+
+        remaindIntervalSecond += 1
+        when (arrayIntervalIndex){
+            0 -> msgUpperSmall.postValue(context.resources.getString(R.string.inhale))
+            1 -> msgUpperSmall.postValue(context.resources.getString(R.string.hold))
+            2 -> msgUpperSmall.postValue(context.resources.getString(R.string.exhale))
         }
     }
 
