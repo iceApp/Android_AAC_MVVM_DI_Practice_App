@@ -86,7 +86,9 @@ class MainViewModel(private val context: Application): AndroidViewModel(context)
             PlayStatus.BEFORE_START -> playStatus.value = PlayStatus.ON_START
             PlayStatus.ON_START -> playStatus.value = PlayStatus.RUNNING
             PlayStatus.RUNNING -> playStatus.value = PlayStatus.PAUSE
-            PlayStatus.PAUSE -> playStatus.value = PlayStatus.RUNNING
+            PlayStatus.PAUSE -> playStatus.value = PlayStatus.RE_RUNNING
+            PlayStatus.RE_RUNNING -> playStatus.value = PlayStatus.PAUSE
+
         }
     }
 
@@ -125,7 +127,7 @@ class MainViewModel(private val context: Application): AndroidViewModel(context)
         clockMeditation()
     }
 
-    private fun clockMeditation() {
+    fun clockMeditation() {
         timerMediation = Timer()
         timerMediation?.schedule(1000, 1000){
             val tempTime = remainedTimeSeconds.value!! - 1

@@ -69,6 +69,8 @@ class MainFragment : Fragment() {
                 PlayStatus.PAUSE -> {
                     viewModel.poseMeditation()
                 }
+                PlayStatus.RE_RUNNING -> {
+                    viewModel.clockMeditation()
                 }
             }
         })

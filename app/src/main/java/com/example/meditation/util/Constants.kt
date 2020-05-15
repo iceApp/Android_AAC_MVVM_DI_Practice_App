@@ -25,7 +25,8 @@ object PlayStatus{
     const val ON_START = 1   //開始直前のカウントダウン
     const val RUNNING = 2   //稼働中
     const val PAUSE = 3  //一時停止
-    const val END = 4    //終了
+    const val RE_RUNNING = 4   //再稼働
+    const val END = 5    //終了
 }
 
 object LevelId{
