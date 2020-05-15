@@ -56,6 +56,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun observeViewModel() {
         viewModel.playStatus.observe(this, Observer { status ->
+            // TODO: パターンをまとめる
             when (status){
                 PlayStatus.BEFORE_START -> {
                     btmNavi.visibility = View.VISIBLE
@@ -66,12 +67,13 @@ class MainActivity : AppCompatActivity() {
                 PlayStatus.RUNNING -> {
                     btmNavi.visibility = View.INVISIBLE
                 }
-
                 PlayStatus.PAUSE -> {
+                    btmNavi.visibility = View.INVISIBLE
+                }
+                PlayStatus.RE_RUNNING -> {
+                    btmNavi.visibility = View.INVISIBLE
                 }
             }
-
-
         })
     }
 }

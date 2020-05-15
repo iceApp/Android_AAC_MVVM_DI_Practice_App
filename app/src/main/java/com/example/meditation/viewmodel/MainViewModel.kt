@@ -146,8 +146,8 @@ class MainViewModel(private val context: Application): AndroidViewModel(context)
 
     private fun setMediationCycle() {
         if (remaindIntervalSecond < totalIntervalSecond) {
-            var num = totalIntervalSecond - remaindIntervalSecond
-            msgLowerLarge.postValue(num.toString())
+            var  intervalSecondsLeft = totalIntervalSecond - remaindIntervalSecond
+            msgLowerLarge.postValue( intervalSecondsLeft.toString())
         } else {
             if (arrayIntervalIndex++ < 2) arrayIntervalIndex else arrayIntervalIndex = 0
             totalIntervalSecond = arrayInterval[arrayIntervalIndex]
@@ -155,7 +155,7 @@ class MainViewModel(private val context: Application): AndroidViewModel(context)
             msgLowerLarge.postValue(totalIntervalSecond.toString())
         }
 
-        remaindIntervalSecond += 1
+        remaindIntervalSecond++
         when (arrayIntervalIndex){
             0 -> msgUpperSmall.postValue(context.resources.getString(R.string.inhale))
             1 -> msgUpperSmall.postValue(context.resources.getString(R.string.hold))
@@ -194,5 +194,9 @@ class MainViewModel(private val context: Application): AndroidViewModel(context)
             3 -> 16
             else -> 0
         }
+    }
+
+    fun poseMeditation() {
+        cancelTimer()
     }
 }
