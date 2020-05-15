@@ -98,7 +98,7 @@ class MainFragment : Fragment() {
                 btnFinish.visibility = View.INVISIBLE
                 txtShowMenu.visibility = View.VISIBLE
             }
-            PlayStatus.RUNNING -> {
+            PlayStatus.RUNNING, PlayStatus.RE_RUNNING -> {
                 btnPlay.apply {
                     visibility = View.VISIBLE
                     setBackgroundResource(R.drawable.button_pause)

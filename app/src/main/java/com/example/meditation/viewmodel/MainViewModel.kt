@@ -201,4 +201,13 @@ class MainViewModel(private val context: Application): AndroidViewModel(context)
     fun poseMeditation() {
         cancelTimer()
     }
+
+    fun finishMeditation(){
+        playStatus.value = PlayStatus.BEFORE_START
+        cancelTimer()
+        remainedTimeSeconds.value = userSettingRepository.loadUserSettings().time * 60
+        displayTimeSeconds.value = changeTimerFormat(remainedTimeSeconds.value!!)
+        msgUpperSmall.value = ""
+        msgLowerLarge.value = context.resources.getString(R.string.meiso_finish)
+    }
 }
