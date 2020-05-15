@@ -70,6 +70,8 @@ class MainActivity : AppCompatActivity() {
                 PlayStatus.PAUSE -> {
                 }
             }
+
+
         })
     }
 }

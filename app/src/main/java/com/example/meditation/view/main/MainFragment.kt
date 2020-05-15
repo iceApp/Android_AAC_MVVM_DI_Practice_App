@@ -56,7 +56,6 @@ class MainFragment : Fragment() {
 
             updateUi(status)
 
-            //TODO: タイマー動作
             when (status){
                 PlayStatus.BEFORE_START -> {
 
