@@ -210,4 +210,9 @@ class MainViewModel(private val context: Application): AndroidViewModel(context)
         msgUpperSmall.value = ""
         msgLowerLarge.value = context.resources.getString(R.string.meiso_finish)
     }
+
+    override fun onCleared() {
+        super.onCleared()
+        cancelTimer()
+    }
 }

@@ -57,9 +57,6 @@ class MainFragment : Fragment() {
             updateUi(status)
 
             when (status){
-                PlayStatus.BEFORE_START -> {
-
-                }
                 PlayStatus.ON_START -> {
                     viewModel.countDownBeforeStart()
                 }
@@ -71,6 +68,9 @@ class MainFragment : Fragment() {
                 }
                 PlayStatus.RE_RUNNING -> {
                     viewModel.clockMeditation()
+                }
+                PlayStatus.END -> {
+                    viewModel.finishMeditation()
                 }
             }
         })
@@ -88,7 +88,6 @@ class MainFragment : Fragment() {
                     visibility = View.VISIBLE
                     setBackgroundResource(R.drawable.button_play)
                 }
-
                 btnFinish.visibility = View.INVISIBLE
                 txtShowMenu.visibility = View.INVISIBLE
 
