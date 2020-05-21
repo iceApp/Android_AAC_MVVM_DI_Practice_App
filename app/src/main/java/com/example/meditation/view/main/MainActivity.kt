@@ -1,11 +1,17 @@
 package com.example.meditation.view.main
 
+import android.content.ComponentName
+import android.content.Context
+import android.content.Intent
+import android.content.ServiceConnection
 import android.os.Bundle
+import android.os.IBinder
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.example.meditation.R
+import com.example.meditation.service.MusicService
 import com.example.meditation.view.dialog.LevelSelectDialog
 import com.example.meditation.view.dialog.ThemeSelectDialog
 import com.example.meditation.view.dialog.TimeSelectDialog
@@ -17,6 +23,8 @@ import com.example.meditation.util.PlayStatus
 class MainActivity : AppCompatActivity() {
 
     private val viewModel: MainViewModel by viewModels()
+
+    private var musicService: MusicService? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
@@ -52,6 +60,23 @@ class MainActivity : AppCompatActivity() {
                 else -> {false}
             }
         }
+
+        val intent = Intent(this,MusicService::class.java)
+        bindService(intent,serviceConnection,Context.BIND_AUTO_CREATE)
+    }
+
+    private val serviceConnection = object : ServiceConnection {
+
+        override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
+            val binder = service as MusicService.MusicBinder
+            musicService = binder.getService()
+
+        }
+
+        override fun onServiceDisconnected(name: ComponentName?) {
+            TODO("Not yet implemented")
+        }
+
     }
 
     private fun observeViewModel() {
@@ -66,12 +91,19 @@ class MainActivity : AppCompatActivity() {
                 }
                 PlayStatus.RUNNING -> {
                     btmNavi.visibility = View.INVISIBLE
+                    musicService?.stopBgm()
                 }
                 PlayStatus.PAUSE -> {
                     btmNavi.visibility = View.INVISIBLE
+                    musicService?.startBgm()
                 }
                 PlayStatus.RE_RUNNING -> {
                     btmNavi.visibility = View.INVISIBLE
+                    musicService?.startBgm()
+                }
+                PlayStatus.END -> {
+                    musicService?.stopBgm()
+                    musicService?.ringFinalGong()
                 }
             }
         })
