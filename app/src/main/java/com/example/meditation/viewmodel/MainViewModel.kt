@@ -26,6 +26,8 @@ class MainViewModel(private val context: Application): AndroidViewModel(context)
     
     val playStatus = MutableLiveData<Int>()
 
+    var volume = MutableLiveData<Int>()
+
     private val userSettingRepository =
         UserSettingsRepository()
     private lateinit var userSettings: UserSettings

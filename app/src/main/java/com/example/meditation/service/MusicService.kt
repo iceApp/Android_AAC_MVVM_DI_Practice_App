@@ -1,9 +1,14 @@
 package com.example.meditation.service
 
 import android.app.Service
+import android.content.Context
 import android.content.Intent
+import android.media.AudioAttributes
+import android.media.AudioManager
+import android.media.SoundPool
 import android.os.Binder
 import android.os.IBinder
+import com.example.meditation.MyApplication
 import com.example.meditation.R
 import com.example.meditation.model.UserSettingsRepository
 import com.example.meditation.util.NO_BGM
@@ -33,16 +38,25 @@ class MusicService : Service() {
     private var rawResourceDataSourceBgm: RawResourceDataSource? = null
     private var rawResourceDataSourceBell: RawResourceDataSource? = null
 
+    private var soundPool: SoundPool? = null
+    private var soundIdGong: Int = 0
+
+    private lateinit var audioManager: AudioManager
+    private var maxVolume: Int = 0
+
+
+
     override fun onBind(intent: Intent): IBinder {
-        bellsPlayer = ExoPlayerFactory.newSimpleInstance(this, DefaultTrackSelector())
-        bgmPlayer = ExoPlayerFactory.newSimpleInstance(this, DefaultTrackSelector())
-        rawResourceDataSourceBgm = RawResourceDataSource(this)
-        rawResourceDataSourceBell = RawResourceDataSource(this)
+        initExoPlayer()
+        initSoundPool()
+        initAudioManager()
 
         return binder
     }
 
     override fun onUnbind(intent: Intent?): Boolean {
+        soundPool?.release()
+        releaseExoPlayer()
         return super.onUnbind(intent)
     }
 
@@ -77,15 +91,17 @@ class MusicService : Service() {
     }
 
     fun stopBgm(){
-
+        bellsPlayer?.stop()
+        bgmPlayer?.stop()
     }
 
-    fun setVolume(){
-
+    fun setVolume(volume: Int){
+        val adjustersVolume = (maxVolume / 100 * volume.toDouble()).toInt()
+        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, adjustersVolume,0)
     }
 
     fun ringFinalGong(){
-
+        soundPool?.play(soundIdGong, 1.0f,1.0f,0,0,1.0f)
     }
 
     private fun releaseExoPlayer(){
@@ -93,6 +109,28 @@ class MusicService : Service() {
         bellsPlayer?.release()
         rawResourceDataSourceBgm?.close()
         rawResourceDataSourceBell?.close()
+    }
 
+    private fun initExoPlayer(){
+        bellsPlayer = ExoPlayerFactory.newSimpleInstance(this, DefaultTrackSelector())
+        bgmPlayer = ExoPlayerFactory.newSimpleInstance(this, DefaultTrackSelector())
+        rawResourceDataSourceBgm = RawResourceDataSource(this)
+        rawResourceDataSourceBell = RawResourceDataSource(this)
+    }
+
+    private fun initSoundPool(){
+        soundPool = SoundPool.Builder().setAudioAttributes(
+            AudioAttributes.Builder()
+                .setUsage(AudioAttributes.USAGE_MEDIA)
+                .build())
+            .setMaxStreams(1)
+            .build()
+
+        soundIdGong - soundPool?.load(this,R.raw.gong_meiso_end,1)!!
+    }
+
+    private fun initAudioManager() {
+        audioManager = MyApplication.appContext.getSystemService(Context.AUDIO_SERVICE) as AudioManager
+        maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
     }
 }

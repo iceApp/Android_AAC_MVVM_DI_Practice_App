@@ -1,17 +1,11 @@
 package com.example.meditation.view.main
 
-import android.content.ComponentName
-import android.content.Context
-import android.content.Intent
-import android.content.ServiceConnection
 import android.os.Bundle
-import android.os.IBinder
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.example.meditation.R
-import com.example.meditation.service.MusicService
 import com.example.meditation.service.MusicServiceHelper
 import com.example.meditation.view.dialog.LevelSelectDialog
 import com.example.meditation.view.dialog.ThemeSelectDialog
@@ -102,6 +96,10 @@ class MainActivity : AppCompatActivity() {
                     musicServiceHelper?.ringFinalGong()
                 }
             }
+        })
+
+        viewModel.volume.observe(this, Observer { volume ->
+            musicServiceHelper?.setVolume(volume)
         })
     }
 }
