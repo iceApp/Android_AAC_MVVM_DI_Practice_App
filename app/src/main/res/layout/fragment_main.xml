@@ -115,7 +115,8 @@
             android:thumb="@drawable/ic_adjust_black_24dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            android:onProgressChanged="@{(seekbar, progress, fromUser) -> viewmodel.setVolume(progress)}" />
 
         <Button
             android:id="@+id/btnPlay"
@@ -130,7 +131,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtMsgLowerLarge"
-            android:onClick="@{() -> viewmodel.changeStatus()}"/>
+            android:onClick="@{() -> viewmodel.changeStatus()}" />
 
         <Button
             android:id="@+id/btnFinish"
@@ -139,7 +140,7 @@
             android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="@+id/btnPlay"
             app:layout_constraintStart_toStartOf="@+id/volumeSeekBar"
-            android:onClick="@{() -> viewmodel.finishMeditation()}"/>
+            android:onClick="@{() -> viewmodel.finishMeditation()}" />
 
         <TextView
             android:id="@+id/txtMsgUpperSmall"

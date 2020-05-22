@@ -83,6 +83,10 @@ class MainViewModel(private val context: Application): AndroidViewModel(context)
         themePicFileResId.value = userSettingRepository.loadUserSettings().themeResId
     }
 
+    fun setVolume(process: Int){
+        volume.value = process
+    }
+
     fun changeStatus() {
         when (playStatus.value) {
             PlayStatus.BEFORE_START -> playStatus.value = PlayStatus.ON_START
