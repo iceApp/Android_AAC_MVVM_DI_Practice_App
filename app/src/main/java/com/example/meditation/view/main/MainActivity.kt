@@ -62,7 +62,6 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-
     override fun onBackPressed() {
         super.onBackPressed()
         musicServiceHelper?.stopBgm()
@@ -75,17 +74,18 @@ class MainActivity : AppCompatActivity() {
             when (status){
                 PlayStatus.BEFORE_START -> {
                     btmNavi.visibility = View.VISIBLE
+                    musicServiceHelper?.stopBgm()
                 }
                 PlayStatus.ON_START -> {
                     btmNavi.visibility = View.INVISIBLE
                 }
                 PlayStatus.RUNNING -> {
                     btmNavi.visibility = View.INVISIBLE
-                    musicServiceHelper?.stopBgm()
+                    musicServiceHelper?.startBgm()
                 }
                 PlayStatus.PAUSE -> {
                     btmNavi.visibility = View.INVISIBLE
-                    musicServiceHelper?.startBgm()
+                    musicServiceHelper?.stopBgm()
                 }
                 PlayStatus.RE_RUNNING -> {
                     btmNavi.visibility = View.INVISIBLE
