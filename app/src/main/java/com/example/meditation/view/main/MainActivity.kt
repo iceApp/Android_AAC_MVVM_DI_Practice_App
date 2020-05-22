@@ -20,11 +20,13 @@ import com.example.meditation.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import com.example.meditation.util.FragmentTag
 import com.example.meditation.util.PlayStatus
+import com.google.android.exoplayer2.SimpleExoPlayer
 
 class MainActivity : AppCompatActivity() {
 
     private val viewModel: MainViewModel by viewModels()
     private var musicServiceHelper: MusicServiceHelper? = null
+    var exoPlayer: SimpleExoPlayer? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
