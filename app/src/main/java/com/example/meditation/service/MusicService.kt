@@ -44,8 +44,6 @@ class MusicService : Service() {
     private lateinit var audioManager: AudioManager
     private var maxVolume: Int = 0
 
-
-
     override fun onBind(intent: Intent): IBinder {
         initExoPlayer()
         initSoundPool()
@@ -96,7 +94,7 @@ class MusicService : Service() {
     }
 
     fun setVolume(volume: Int){
-        val adjustersVolume = (maxVolume / 100 * volume.toDouble()).toInt()
+        val adjustersVolume = (maxVolume / 100.toDouble() * volume.toDouble()).toInt()
         audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, adjustersVolume,0)
     }
 
