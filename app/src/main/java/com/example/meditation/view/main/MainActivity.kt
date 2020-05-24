@@ -13,14 +13,15 @@ import com.example.meditation.view.dialog.TimeSelectDialog
 import com.example.meditation.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import com.example.meditation.util.FragmentTag
+import com.example.meditation.util.NotificationHelper
 import com.example.meditation.util.PlayStatus
-import com.google.android.exoplayer2.SimpleExoPlayer
 
 class MainActivity : AppCompatActivity() {
 
     private val viewModel: MainViewModel by viewModels()
+
     private var musicServiceHelper: MusicServiceHelper? = null
-    var exoPlayer: SimpleExoPlayer? = null
+    private var notificationHelper: NotificationHelper? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
@@ -60,12 +61,28 @@ class MainActivity : AppCompatActivity() {
         musicServiceHelper = MusicServiceHelper(this)
         musicServiceHelper?.bindService()
 
+        notificationHelper = NotificationHelper(this)
     }
 
     override fun onBackPressed() {
         super.onBackPressed()
         musicServiceHelper?.stopBgm()
         finish()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        notificationHelper?.cancelNotification()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        notificationHelper?.startNotification()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        notificationHelper?.cancelNotification()
     }
 
     private fun observeViewModel() {
