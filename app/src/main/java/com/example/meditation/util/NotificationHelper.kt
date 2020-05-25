@@ -22,10 +22,10 @@ class NotificationHelper(var context: Context) {
         registerNotificationChannel()
     }
 
-    fun registerNotificationChannel(){
+    private fun registerNotificationChannel(){
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             // Create the NotificationChannel
-            val name = "channnel_1"
+            val name = "channel_1"
             val descriptionText = "アプリがバックグラウンドに行った際に通知を表示します。"
             val importance = NotificationManager.IMPORTANCE_LOW
             val mChannel = NotificationChannel(NOTIFICATION_CHANNEL_ID, name, importance)

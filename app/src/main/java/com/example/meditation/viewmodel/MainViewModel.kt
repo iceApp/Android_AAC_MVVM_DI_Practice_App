@@ -209,8 +209,8 @@ class MainViewModel(private val context: Application): AndroidViewModel(context)
     }
 
     fun finishMeditation(){
-        playStatus.value = PlayStatus.BEFORE_START
         cancelTimer()
+        playStatus.value = PlayStatus.BEFORE_START
         remainedTimeSeconds.value = userSettingRepository.loadUserSettings().time * 60
         displayTimeSeconds.value = changeTimerFormat(remainedTimeSeconds.value!!)
         msgUpperSmall.value = ""
