@@ -5,6 +5,10 @@ import android.content.Context
 import com.example.meditation.data.ThemeData
 import com.example.meditation.util.NO_BGM
 import com.example.meditation.util.ThemeId
+import com.example.meditation.util.appModule
+import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
+import org.koin.core.context.startKoin
 import java.util.ArrayList
 
 class MyApplication: Application() {
@@ -12,6 +16,11 @@ class MyApplication: Application() {
         super.onCreate()
         appContext = this
         themeList = setThemeData()
+        startKoin {
+            androidLogger()
+            androidContext(this@MyApplication)
+            modules(appModule)
+        }
     }
 
     private fun setThemeData(): ArrayList<ThemeData> {

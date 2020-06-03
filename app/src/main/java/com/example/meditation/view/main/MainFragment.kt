@@ -19,13 +19,14 @@ import com.example.meditation.viewmodel.MainViewModel
 import com.example.meditation.R
 import com.example.meditation.databinding.FragmentMainBinding
 import com.example.meditation.util.PlayStatus
+import org.koin.android.viewmodel.ext.android.sharedViewModel
 
 /**
  * A simple [Fragment] subclass.
  */
 class MainFragment : Fragment() {
 
-    private val viewModel: MainViewModel by activityViewModels()
+    private val viewModel: MainViewModel by sharedViewModel()
     private lateinit var binding: FragmentMainBinding
 
     override fun onCreateView(

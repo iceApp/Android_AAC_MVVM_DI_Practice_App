@@ -8,10 +8,12 @@ import com.example.meditation.data.ThemeData
 import com.example.meditation.model.UserSettings
 import com.example.meditation.model.UserSettingsRepository
 import com.example.meditation.util.PlayStatus
+import org.koin.core.KoinComponent
+import org.koin.core.inject
 import java.util.*
 import kotlin.concurrent.schedule
 
-class MainViewModel(private val context: Application): AndroidViewModel(context) {
+class MainViewModel(private val context: Application): AndroidViewModel(context), KoinComponent {
 
     val msgUpperSmall = MutableLiveData<String>()
     val msgLowerLarge = MutableLiveData<String>()
@@ -28,11 +30,12 @@ class MainViewModel(private val context: Application): AndroidViewModel(context)
 
     var volume = MutableLiveData<Int>()
 
-    private val userSettingRepository =
-        UserSettingsRepository()
+    //private val userSettingRepository = UserSettingsRepository()
+    private val userSettingRepository: UserSettingsRepository by inject()
+
     private lateinit var userSettings: UserSettings
 
-    // 呼吸感覚
+    // 呼吸間隔
     private val inhaleInterval = 4
     private var holdInterval = 0
     private var exhaleInterval = 0

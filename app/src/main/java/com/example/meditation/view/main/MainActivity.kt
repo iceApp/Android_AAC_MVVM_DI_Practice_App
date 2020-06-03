@@ -15,13 +15,23 @@ import kotlinx.android.synthetic.main.activity_main.*
 import com.example.meditation.util.FragmentTag
 import com.example.meditation.util.NotificationHelper
 import com.example.meditation.util.PlayStatus
+import org.koin.android.ext.android.inject
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
 
-    private val viewModel: MainViewModel by viewModels()
+    //private val viewModel: MainViewModel by viewModels()
+    private val viewModel: MainViewModel by viewModel()
 
-    private var musicServiceHelper: MusicServiceHelper? = null
-    private var notificationHelper: NotificationHelper? = null
+    //private var musicServiceHelper: MusicServiceHelper? = null
+    private val musicServiceHelper: MusicServiceHelper by inject()
+    //private var notificationHelper: NotificationHelper? = null
+    private val notificationHelper: NotificationHelper by inject()
+
+    private val mainFragment: MainFragment by inject()
+    private val levelSelectDialog: LevelSelectDialog by inject()
+    private val themeSelectDialog: ThemeSelectDialog by inject()
+    private val timeSelectDialog: TimeSelectDialog by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
@@ -32,7 +42,7 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.beginTransaction()
                 .replace(
                     R.id.screen_container,
-                    MainFragment()
+                    mainFragment
                 )
                 .commit()
         }
@@ -42,47 +52,47 @@ class MainActivity : AppCompatActivity() {
         btmNavi.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.item_select_level -> {
-                    LevelSelectDialog().show(supportFragmentManager, FragmentTag.LEVEL_SELECT.name)
+                    levelSelectDialog.show(supportFragmentManager, FragmentTag.LEVEL_SELECT.name)
                     true
                 }
                 R.id.item_select_theme -> {
-                    ThemeSelectDialog().show(supportFragmentManager, FragmentTag.THEME_SELECT.name)
+                    themeSelectDialog.show(supportFragmentManager, FragmentTag.THEME_SELECT.name)
                     true
                 }
 
                 R.id.item_select_time -> {
-                    TimeSelectDialog().show(supportFragmentManager, FragmentTag.TIME_SELECT.name)
+                    timeSelectDialog.show(supportFragmentManager, FragmentTag.TIME_SELECT.name)
                     true
                 }
                 else -> {false}
             }
         }
 
-        musicServiceHelper = MusicServiceHelper(this)
-        musicServiceHelper?.bindService()
+        //musicServiceHelper = MusicServiceHelper(this)
+        musicServiceHelper.bindService()
 
-        notificationHelper = NotificationHelper(this)
+        //notificationHelper = NotificationHelper(this)
     }
 
     override fun onBackPressed() {
         super.onBackPressed()
-        musicServiceHelper?.stopBgm()
+        musicServiceHelper.stopBgm()
         finish()
     }
 
     override fun onResume() {
         super.onResume()
-        notificationHelper?.cancelNotification()
+        notificationHelper.cancelNotification()
     }
 
     override fun onPause() {
         super.onPause()
-        notificationHelper?.startNotification()
+        notificationHelper.startNotification()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        notificationHelper?.cancelNotification()
+        notificationHelper.cancelNotification()
     }
 
     private fun observeViewModel() {
@@ -91,32 +101,32 @@ class MainActivity : AppCompatActivity() {
             when (status){
                 PlayStatus.BEFORE_START -> {
                     btmNavi.visibility = View.VISIBLE
-                    musicServiceHelper?.stopBgm()
+                    musicServiceHelper.stopBgm()
                 }
                 PlayStatus.ON_START -> {
                     btmNavi.visibility = View.INVISIBLE
                 }
                 PlayStatus.RUNNING -> {
                     btmNavi.visibility = View.INVISIBLE
-                    musicServiceHelper?.startBgm()
+                    musicServiceHelper.startBgm()
                 }
                 PlayStatus.PAUSE -> {
                     btmNavi.visibility = View.INVISIBLE
-                    musicServiceHelper?.stopBgm()
+                    musicServiceHelper.stopBgm()
                 }
                 PlayStatus.RE_RUNNING -> {
                     btmNavi.visibility = View.INVISIBLE
-                    musicServiceHelper?.startBgm()
+                    musicServiceHelper.startBgm()
                 }
                 PlayStatus.END -> {
-                    musicServiceHelper?.stopBgm()
-                    musicServiceHelper?.ringFinalGong()
+                    musicServiceHelper.stopBgm()
+                    musicServiceHelper.ringFinalGong()
                 }
             }
         })
 
         viewModel.volume.observe(this, Observer { volume ->
-            musicServiceHelper?.setVolume(volume)
+            musicServiceHelper.setVolume(volume)
         })
     }
 }
