@@ -7,7 +7,7 @@ MVVM
 ## 設計
 ViewModel／LiveData／DataBinding／Repository
 
-# 機能
+## 機能
 RecyclerView／CardView／DialogFragment／Service／SharedPreferences／BottomNavigationView／launchMode
 
 # DI
